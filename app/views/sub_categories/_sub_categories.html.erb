@@ -1,0 +1,12 @@
+<tr>
+  <td>
+    <%= link_to edit_category_sub_category_path(category,sub_category) do %>
+      <span data-feather="edit" color="orange"></span>
+    <% end %>
+    <%= link_to category_sub_category_path(category,sub_category), method: :delete, data: { confirm: 'Are you sure?' } do %>
+    <span data-feather="x" color="red"></span>
+    <% end %>
+  </td>
+  <td><%= sub_category.name %></td>
+  <td><%= sub_category.description %></td>
+</tr>
