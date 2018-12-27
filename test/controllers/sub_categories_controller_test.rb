@@ -6,43 +6,43 @@ class SubCategoriesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should get index" do
-    get sub_categories_url
+    get category_sub_categories_url(categories(:one))
     assert_response :success
   end
 
   test "should get new" do
-    get new_sub_category_url
+    get new_category_sub_category_url(categories(:one))
     assert_response :success
   end
 
   test "should create sub_category" do
     assert_difference('SubCategory.count') do
-      post sub_categories_url, params: { sub_category: { category_id: @sub_category.category_id, description: @sub_category.description, name: @sub_category.name } }
+      post category_sub_categories_url(categories(:one)), params: { sub_category: { category_id: categories(:one).id, description: @sub_category.description, name: "New Subcategory" } }
     end
 
-    assert_redirected_to sub_category_url(SubCategory.last)
+    assert_redirected_to categories_url
   end
 
   test "should show sub_category" do
-    get sub_category_url(@sub_category)
+    get category_sub_category_url(categories(:one),@sub_category)
     assert_response :success
   end
 
   test "should get edit" do
-    get edit_sub_category_url(@sub_category)
+    get edit_category_sub_category_url(categories(:one),@sub_category)
     assert_response :success
   end
 
   test "should update sub_category" do
-    patch sub_category_url(@sub_category), params: { sub_category: { category_id: @sub_category.category_id, description: @sub_category.description, name: @sub_category.name } }
-    assert_redirected_to sub_category_url(@sub_category)
+    patch category_sub_category_url(categories(:one), @sub_category), params: { sub_category: { category_id: @sub_category.category_id, description: @sub_category.description, name: @sub_category.name } }
+    assert_response :success
   end
 
   test "should destroy sub_category" do
     assert_difference('SubCategory.count', -1) do
-      delete sub_category_url(@sub_category)
+      delete category_sub_category_url(categories(:one), @sub_category)
     end
 
-    assert_redirected_to sub_categories_url
+    assert_redirected_to category_sub_categories_url(categories(:one))
   end
 end
