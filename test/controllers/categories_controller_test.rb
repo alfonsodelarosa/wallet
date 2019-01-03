@@ -1,8 +1,12 @@
 require 'test_helper'
 
 class CategoriesControllerTest < ActionDispatch::IntegrationTest
+  include Devise::Test::IntegrationHelpers
+
   setup do
     @category = categories(:one)
+    @user = users(:tom)
+    sign_in @user
   end
 
   test "should get index" do
@@ -19,7 +23,6 @@ class CategoriesControllerTest < ActionDispatch::IntegrationTest
     assert_difference('Category.count') do
       post categories_url, params: { category: { description: @category.description, name: "New Category 2" } }
     end
-
     assert_redirected_to categories_url
   end
 
@@ -35,7 +38,7 @@ class CategoriesControllerTest < ActionDispatch::IntegrationTest
 
   test "should update category" do
     patch category_url(@category), params: { category: { description: @category.description, name: "Update Category name" } }
-    assert_redirected_to categories_url
+    assert_response :success
   end
 
   test "should destroy category" do
@@ -45,4 +48,5 @@ class CategoriesControllerTest < ActionDispatch::IntegrationTest
 
     assert_redirected_to categories_url
   end
+
 end
