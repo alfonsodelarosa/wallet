@@ -3,6 +3,18 @@
     <%= notice %>
   </div>
 <% end %>
+<% if flash[:errors] %>
+<br/>
+  <div class="alert alert-danger" role="alert">
+    <h3><%= pluralize(flash[:errors].count, "error") %> prohibited this sub_category from being saved:</h2>
+    <ul>
+      <% flash[:errors].each do |field,message| %>
+        <li><%= field %> <%= message.join("', '") %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+
 <h1>Categories</h1>
 <div class="table-responsive">
   <table class="table table-striped table-sm">
@@ -21,7 +33,7 @@
               <span data-feather="edit" color="orange"></span>
             <% end %>
             <%= link_to category, method: :delete, data: { confirm: 'Are you sure?' } do %>
-            <span data-feather="x" color="red"></span>
+              <span data-feather="x" color="red"></span>
             <% end %>
           </td>
           <td>
@@ -38,6 +50,12 @@
                 <% category.sub_categories.each do |sub_category| %>
                   <%= render 'sub_categories/sub_categories', category: category , sub_category: sub_category %>
                 <% end %>
+                <tr>
+                  <td>
+                    <a href="#" data-toggle="modal" data-target="#modal_new_sub_categories_<%= category.id %>" class="btn btn-success" >New Subcategory</a>
+                    <%= render 'sub_categories/modal_sub_categories', category: category , sub_category: SubCategory.new, action: "new" %>
+                  </td>
+                </tr>
               </tbody>
             </table>
           </td>
@@ -48,24 +66,5 @@
   </table>
 
 </div>
-  <%= link_to 'New Category', new_category_path %>
+  <%= link_to 'New Category', new_category_path, class: "btn btn-success" %>
 </div>
-
-<!-- Modal -->
-<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalCenterTitle">Modal title</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
-      </div>
-    </div>
-  </div>

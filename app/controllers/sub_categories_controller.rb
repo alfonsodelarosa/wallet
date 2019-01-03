@@ -29,12 +29,14 @@ class SubCategoriesController < ApplicationController
     @sub_category = @category.sub_categories.build(sub_category_params)
 
     respond_to do |format|
+
       if @sub_category.save
         format.js {@current_subcategory = @sub_category }
         format.html { redirect_to categories_path, notice: 'Sub category was successfully created.' }
         format.json { render :show, status: :created, location: @sub_category }
       else
-        format.html { render :new }
+        pp @sub_category.errors
+        format.html { redirect_to categories_path, :flash => { :errors => @sub_category.errors } }
         format.json { render json: @sub_category.errors, status: :unprocessable_entity }
       end
     end
@@ -46,11 +48,10 @@ class SubCategoriesController < ApplicationController
 
     respond_to do |format|
       if @sub_category.update(sub_category_params)
-
         format.html { redirect_to categories_path, notice: 'Sub category was successfully updated.' }
         format.json { render :show, status: :ok, location: @sub_category }
       else
-        format.html { render :edit }
+        format.html { redirect_to categories_path, :flash => { :errors => @sub_category.errors }}
         format.json { render json: @sub_category.errors, status: :unprocessable_entity }
       end
     end
