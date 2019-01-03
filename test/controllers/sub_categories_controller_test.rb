@@ -35,7 +35,7 @@ class SubCategoriesControllerTest < ActionDispatch::IntegrationTest
 
   test "should update sub_category" do
     patch category_sub_category_url(categories(:one), @sub_category), params: { sub_category: { category_id: @sub_category.category_id, description: @sub_category.description, name: @sub_category.name } }
-    assert_response :success
+    assert_redirected_to categories_url
   end
 
   test "should destroy sub_category" do
